@@ -1,13 +1,14 @@
-{% extends 'main.html' %}
-{% block content %}
+{% extends 'main.html' %} {% block content %}
 <h1>Home Template</h1>
 <div>
+  <div>
+    {% for catRoom in catRooms%}
     <div>
-        {% for catRoom in catRooms%}
-        <div>
-            <h5>{{catRoom.id}} -- {{catRoom.name}}</h5>
-        </div>
-        {% endfor %}
+      <h5>
+        {{catRoom.id}} -- <a href="/catRoom/{{catRoom.id}}">{{catRoom.name}}</a>
+      </h5>
     </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

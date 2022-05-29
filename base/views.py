@@ -11,10 +11,17 @@ catRooms = [
 
 def home(request):
     context = {
-        'catRooms':catRooms
+        'catRooms': catRooms
     }
-    return render(request, 'base/home.html',context)
+    return render(request, 'base/home.html', context)
 
 
-def catRoom(request):
-    return render(request, 'base/catRoom.html')
+def catRoom(request, pk):
+    catRoom = None
+    for room in catRooms:
+        if room['id'] == int(pk):
+            catRoom = room
+    context = {
+        'catRoom': catRoom
+    }
+    return render(request, 'base/catRoom.html', context)
