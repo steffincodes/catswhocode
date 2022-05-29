@@ -1,12 +1,20 @@
 from django.shortcuts import render
-# from django.http import HttpResponse 
 
 # Create your views here.
 
+catRooms = [
+    {'id': 1, 'name': 'Nevertheless she PURRsisted!'},
+    {'id': 2, 'name': 'Will Code for Catnips 🌿'},
+    {'id': 3, 'name': 'Javascript Li(n)tter!'},
+]
+
+
 def home(request):
-    # return HttpResponse('Home Page')
-    return render(request, 'home.html')
+    context = {
+        'catRooms':catRooms
+    }
+    return render(request, 'home.html',context)
+
 
 def catRoom(request):
-    # return HttpResponse('Cat Room')
     return render(request, 'catRoom.html')
