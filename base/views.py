@@ -13,8 +13,8 @@ def home(request):
     context = {
         'catRooms':catRooms
     }
-    return render(request, 'home.html',context)
+    return render(request, 'base/home.html',context)
 
 
 def catRoom(request):
-    return render(request, 'catRoom.html')
+    return render(request, 'base/catRoom.html')
