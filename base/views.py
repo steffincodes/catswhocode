@@ -1,15 +1,11 @@
 from django.shortcuts import render
+from .models import CatRoom
 
 # Create your views here.
 
-catRooms = [
-    {'id': 1, 'name': 'Nevertheless she PURRsisted!'},
-    {'id': 2, 'name': 'Will Code for Catnips 🌿'},
-    {'id': 3, 'name': 'Javascript Li(n)tter!'},
-]
-
 
 def home(request):
+    catRooms = CatRoom.objects.all()
     context = {
         'catRooms': catRooms
     }
@@ -17,10 +13,7 @@ def home(request):
 
 
 def catRoom(request, pk):
-    catRoom = None
-    for room in catRooms:
-        if room['id'] == int(pk):
-            catRoom = room
+    catRoom = CatRoom.objects.get(id=pk)
     context = {
         'catRoom': catRoom
     }
