@@ -4,9 +4,14 @@
   <div>
     {% for catRoom in catRooms%}
     <div>
+      <span>
+        @{{catRoom.hostCat.username}}
+      </span>
       <h5>
         {{catRoom.id}} -- <a href="{% url 'catRoom' catRoom.id %}">{{catRoom.name}}</a>
       </h5>
+      <small>{{catRoom.topic.name}}</small>
+      <hr>
     </div>
     {% endfor %}
   </div>
