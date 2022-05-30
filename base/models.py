@@ -11,6 +11,7 @@ class Topic(models.Model):
 
 
 class CatRoom(models.Model):
+    hostCat = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200)
     description = models.TextField(
