@@ -7,4 +7,5 @@ urlpatterns = [
 
     path('create-cat-room/', views.createCatRoom, name='createCatRoom'),
     path('update-cat-room/<str:pk>', views.updateCatRoom, name='updateCatRoom'),
+    path('delete-cat-room/<str:pk>', views.deleteCatRoom, name='deleteCatRoom'),
 ]

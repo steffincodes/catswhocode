@@ -6,6 +6,7 @@
     {% for catRoom in catRooms%}
     <div>
       <a href="{% url 'updateCatRoom' catRoom.id %}">Edit</a>
+      <a href="{% url 'deleteCatRoom' catRoom.id %}">Delete</a>
       <span>
         @{{catRoom.hostCat.username}}
       </span>

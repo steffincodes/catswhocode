@@ -44,3 +44,13 @@ def updateCatRoom(request, pk):
 
     context = {'form': form}
     return render(request, 'base/catRoom_form.html', context)
+
+
+def deleteCatRoom(request,pk):
+    catRoom = CatRoom.objects.get(id=pk)
+    context = {'obj': catRoom}
+    if request.method == 'POST':
+        catRoom.delete()
+        return redirect('home')
+
+    return render(request, 'base/delete.html', context)
