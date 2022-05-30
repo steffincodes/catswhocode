@@ -5,6 +5,7 @@
   <div>
     {% for catRoom in catRooms%}
     <div>
+      <a href="{% url 'updateCatRoom' catRoom.id %}">Edit</a>
       <span>
         @{{catRoom.hostCat.username}}
       </span>

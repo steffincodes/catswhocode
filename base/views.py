@@ -31,3 +31,16 @@ def createCatRoom(request):
 
     context = {'form': form}
     return render(request, 'base/catRoom_form.html', context)
+
+
+def updateCatRoom(request, pk):
+    catRoom = CatRoom.objects.get(id=pk)
+    form = CatRoomForm(instance=catRoom)
+    if request.method == 'POST':
+        form = CatRoomForm(request.POST, instance=catRoom)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'base/catRoom_form.html', context)
