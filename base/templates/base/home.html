@@ -5,7 +5,7 @@
     {% for catRoom in catRooms%}
     <div>
       <h5>
-        {{catRoom.id}} -- <a href="/catRoom/{{catRoom.id}}">{{catRoom.name}}</a>
+        {{catRoom.id}} -- <a href="{% url 'catRoom' catRoom.id %}">{{catRoom.name}}</a>
       </h5>
     </div>
     {% endfor %}
