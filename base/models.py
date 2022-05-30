@@ -19,6 +19,9 @@ class CatRoom(models.Model):
     updated = models.DateTimeField(auto_now=True)  # every saved change
     created = models.DateTimeField(auto_now_add=True)  # first saved change
 
+    class Meta:
+        ordering = ['-updated','created']
+
     def __str__(self):
         return str(self.name)
 
