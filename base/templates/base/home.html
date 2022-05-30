@@ -1,6 +1,7 @@
 {% extends 'main.html' %} {% block content %}
 <h1>Home Template</h1>
 <div>
+  <a href="{% url 'createCatRoom' %}">Create Cat Room</a>
   <div>
     {% for catRoom in catRooms%}
     <div>
