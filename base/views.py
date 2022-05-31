@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect
-from .models import CatRoom
+from .models import CatRoom, Topic
 from .forms import CatRoomForm
 
 # Create your views here.
 
 
 def home(request):
-    catRooms = CatRoom.objects.all()
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    catRooms = CatRoom.objects.filter(topic__name__icontains=q)
+    topics = Topic.objects.all()
     context = {
-        'catRooms': catRooms
+        'catRooms': catRooms,
+        'topics': topics
     }
     return render(request, 'base/home.html', context)
 
@@ -46,7 +49,7 @@ def updateCatRoom(request, pk):
     return render(request, 'base/catRoom_form.html', context)
 
 
-def deleteCatRoom(request,pk):
+def deleteCatRoom(request, pk):
     catRoom = CatRoom.objects.get(id=pk)
     context = {'obj': catRoom}
     if request.method == 'POST':
