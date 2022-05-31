@@ -1,6 +1,4 @@
-{% extends 'main.html' %} 
-
-{% block content %}
+{% extends 'main.html' %} {% block content %}
 
 <style>
   .home-container {
@@ -18,12 +16,13 @@
       <a href="{% url 'home' %}">All</a>
     </div>
     {% for topic in topics %}
-      <div>
-        <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
-      </div>
+    <div>
+      <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
+    </div>
     {% endfor %}
   </div>
   <div>
+    <h5>{{catRooms_count}} room{% if catRooms_count != 1 %}s {% endif %} available</h5>
     <a href="{% url 'createCatRoom' %}">Create Cat Room</a>
     <div>
       {% for catRoom in catRooms%}

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from .models import CatRoom, Topic
 from .forms import CatRoomForm
 
@@ -7,11 +8,17 @@ from .forms import CatRoomForm
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
-    catRooms = CatRoom.objects.filter(topic__name__icontains=q)
+    catRooms = CatRoom.objects.filter(
+        Q(topic__name__icontains=q) |
+        Q(name__icontains=q) |
+        Q(description__icontains=q)
+    )
     topics = Topic.objects.all()
+    catRooms_count = catRooms.count()
     context = {
         'catRooms': catRooms,
-        'topics': topics
+        'topics': topics,
+        'catRooms_count':catRooms_count
     }
     return render(request, 'base/home.html', context)
 
