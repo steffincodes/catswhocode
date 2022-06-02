@@ -1,9 +1,36 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
+from django.contrib.auth.models import User
 from .models import CatRoom, Topic
 from .forms import CatRoomForm
 
 # Create your views here.
+
+
+def loginRegister(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'User not found')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Authetication Failed')
+
+    context = {}
+    return render(request, 'base/login_register.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('home')
 
 
 def home(request):
@@ -18,7 +45,7 @@ def home(request):
     context = {
         'catRooms': catRooms,
         'topics': topics,
-        'catRooms_count':catRooms_count
+        'catRooms_count': catRooms_count
     }
     return render(request, 'base/home.html', context)
 
