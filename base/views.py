@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -58,6 +60,7 @@ def catRoom(request, pk):
     return render(request, 'base/catRoom.html', context)
 
 
+@login_required(login_url='/login')
 def createCatRoom(request):
     form = CatRoomForm()
     if request.method == 'POST':
@@ -70,9 +73,12 @@ def createCatRoom(request):
     return render(request, 'base/catRoom_form.html', context)
 
 
+@login_required(login_url='/login')
 def updateCatRoom(request, pk):
     catRoom = CatRoom.objects.get(id=pk)
     form = CatRoomForm(instance=catRoom)
+    if request.user != catRoom.hostCat:
+        return HttpResponse('You are not allowed here...')
     if request.method == 'POST':
         form = CatRoomForm(request.POST, instance=catRoom)
         if form.is_valid():
@@ -83,9 +89,13 @@ def updateCatRoom(request, pk):
     return render(request, 'base/catRoom_form.html', context)
 
 
+@login_required(login_url='/login')
 def deleteCatRoom(request, pk):
     catRoom = CatRoom.objects.get(id=pk)
     context = {'obj': catRoom}
+    if request.user != catRoom.hostCat:
+        return HttpResponse('You are not allowed here...')
+
     if request.method == 'POST':
         catRoom.delete()
         return redirect('home')

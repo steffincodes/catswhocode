@@ -27,8 +27,10 @@
     <div>
       {% for catRoom in catRooms%}
       <div>
+        {% if request.user == catRoom.hostCat %}
         <a href="{% url 'updateCatRoom' catRoom.id %}">Edit</a>
         <a href="{% url 'deleteCatRoom' catRoom.id %}">Delete</a>
+        {% endif %}
         <span> @{{catRoom.hostCat.username}} </span>
         <h5>
           {{catRoom.id}} --
