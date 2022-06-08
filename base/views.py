@@ -59,7 +59,7 @@ def catRoom(request, pk):
     context = {
         'catRoom': catRoom
     }
-    return render(request, 'base/catRoom.html', context)
+    return render(request, 'base/cat_room.html', context)
 
 
 @login_required(login_url='/login')
@@ -72,7 +72,7 @@ def createCatRoom(request):
             return redirect('home')
 
     context = {'form': form}
-    return render(request, 'base/catRoom_form.html', context)
+    return render(request, 'base/cat_room_form.html', context)
 
 
 @login_required(login_url='/login')
@@ -88,7 +88,7 @@ def updateCatRoom(request, pk):
             return redirect('home')
 
     context = {'form': form}
-    return render(request, 'base/catRoom_form.html', context)
+    return render(request, 'base/cat_room_form.html', context)
 
 
 @login_required(login_url='/login')
