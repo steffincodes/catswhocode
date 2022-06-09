@@ -57,25 +57,27 @@ def registerUser(request):
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
-    catRooms = CatRoom.objects.filter(
+    cat_rooms = CatRoom.objects.filter(
         Q(topic__name__icontains=q) |
         Q(name__icontains=q) |
         Q(description__icontains=q)
     )
     topics = Topic.objects.all()
-    catRooms_count = catRooms.count()
+    cat_rooms_count = cat_rooms.count()
     context = {
-        'catRooms': catRooms,
+        'cat_rooms': cat_rooms,
         'topics': topics,
-        'catRooms_count': catRooms_count
+        'cat_rooms_count': cat_rooms_count
     }
     return render(request, 'base/home.html', context)
 
 
-def catRoom(request, pk):
-    catRoom = CatRoom.objects.get(id=pk)
+def cat_room(request, pk):
+    cat_room = CatRoom.objects.get(id=pk)
+    meows = cat_room.message_set.all()
     context = {
-        'catRoom': catRoom
+        'cat_room': cat_room,
+        'meows': meows
     }
     return render(request, 'base/cat_room.html', context)
 
@@ -95,12 +97,12 @@ def createCatRoom(request):
 
 @login_required(login_url='/login')
 def updateCatRoom(request, pk):
-    catRoom = CatRoom.objects.get(id=pk)
-    form = CatRoomForm(instance=catRoom)
-    if request.user != catRoom.hostCat:
+    cat_room = CatRoom.objects.get(id=pk)
+    form = CatRoomForm(instance=cat_room)
+    if request.user != cat_room.hostCat:
         return HttpResponse('You are not allowed here...')
     if request.method == 'POST':
-        form = CatRoomForm(request.POST, instance=catRoom)
+        form = CatRoomForm(request.POST, instance=cat_room)
         if form.is_valid():
             form.save()
             return redirect('home')
@@ -111,13 +113,13 @@ def updateCatRoom(request, pk):
 
 @login_required(login_url='/login')
 def deleteCatRoom(request, pk):
-    catRoom = CatRoom.objects.get(id=pk)
-    context = {'obj': catRoom}
-    if request.user != catRoom.hostCat:
+    cat_room = CatRoom.objects.get(id=pk)
+    context = {'obj': cat_room}
+    if request.user != cat_room.hostCat:
         return HttpResponse('You are not allowed here...')
 
     if request.method == 'POST':
-        catRoom.delete()
+        cat_room.delete()
         return redirect('home')
 
     return render(request, 'base/delete.html', context)

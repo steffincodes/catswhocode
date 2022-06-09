@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('cat', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('catRoom', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='base.catroom')),
+                ('cat_room', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='base.catroom')),
             ],
         ),
         migrations.AddField(

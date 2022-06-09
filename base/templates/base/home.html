@@ -22,21 +22,21 @@
     {% endfor %}
   </div>
   <div>
-    <h5>{{catRooms_count}} room{% if catRooms_count != 1 %}s {% endif %} available</h5>
+    <h5>{{cat_rooms_count}} room{% if cat_rooms_count != 1 %}s {% endif %} available</h5>
     <a href="{% url 'createCatRoom' %}">Create Cat Room</a>
     <div>
-      {% for catRoom in catRooms%}
+      {% for cat_room in cat_rooms%}
       <div>
-        {% if request.user == catRoom.hostCat %}
-        <a href="{% url 'updateCatRoom' catRoom.id %}">Edit</a>
-        <a href="{% url 'deleteCatRoom' catRoom.id %}">Delete</a>
+        {% if request.user == cat_room.hostCat %}
+        <a href="{% url 'updateCatRoom' cat_room.id %}">Edit</a>
+        <a href="{% url 'deleteCatRoom' cat_room.id %}">Delete</a>
         {% endif %}
-        <span> @{{catRoom.hostCat.username}} </span>
+        <span> @{{cat_room.hostCat.username}} </span>
         <h5>
-          {{catRoom.id}} --
-          <a href="{% url 'catRoom' catRoom.id %}">{{catRoom.name}}</a>
+          {{cat_room.id}} --
+          <a href="{% url 'cat_room' cat_room.id %}">{{cat_room.name}}</a>
         </h5>
-        <small>{{catRoom.topic.name}}</small>
+        <small>{{cat_room.topic.name}}</small>
         <hr />
       </div>
       {% endfor %}
