@@ -1,4 +1,22 @@
-{% extends 'main.html' %}
-{% block content %}
-<h1>{{catRoom.name}}</h1>
-{% endblock %}
+{% extends 'main.html' %} {% block content %}
+<h1>{{cat_room.name}}</h1>
+<p>{{cat_room.description}}</p>
+<div class="comment-wrapper">
+  <h3>Meows</h3>
+  <hr />
+  {% for meow in meows %}
+  <div>
+    <small> @{{meow.cat}} {{moew.created|timesince}} ago</small>
+    <p>{{meow.body}}</p>
+    <hr />
+  </div>
+  {% endfor %}
+</div>
+{% if request.user.is_authenticated %}
+<div class="comment-form">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" name="body" placeholder="Make some noise..." />
+  </form>
+</div>
+{%endif%} {% endblock %}

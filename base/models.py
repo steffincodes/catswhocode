@@ -28,7 +28,7 @@ class CatRoom(models.Model):
 
 class Meow(models.Model):
     cat = models.ForeignKey(User, on_delete=models.CASCADE)
-    cat_room = models.ForeignKey(CatRoom, on_delete=models.CASCADE)
+    catRoom = models.ForeignKey(CatRoom, on_delete=models.CASCADE)
     body = models.TextField()
     updated = models.DateTimeField(auto_now=True)  # every saved change
     created = models.DateTimeField(auto_now_add=True)  # first saved change

@@ -17,7 +17,7 @@ def loginUser(request):
     if request.user.is_authenticated:
         return redirect('home')
     if request.method == 'POST':
-        username = request.POST.get('username').lower()
+        username = request.POST.get('username') #.lower()
         password = request.POST.get('password')
         try:
             user = User.objects.get(username=username)
@@ -74,7 +74,7 @@ def home(request):
 
 def cat_room(request, pk):
     cat_room = CatRoom.objects.get(id=pk)
-    meows = cat_room.message_set.all()
+    meows = cat_room.meow_set.all().order_by('-created')
     context = {
         'cat_room': cat_room,
         'meows': meows
