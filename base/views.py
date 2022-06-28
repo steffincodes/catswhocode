@@ -6,9 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.contrib.auth.models import User
-from .models import CatRoom, Topic
+from .models import CatRoom, Topic, Meow
 from .forms import CatRoomForm
-
 # Create your views here.
 
 
@@ -17,7 +16,7 @@ def loginUser(request):
     if request.user.is_authenticated:
         return redirect('home')
     if request.method == 'POST':
-        username = request.POST.get('username') #.lower()
+        username = request.POST.get('username')  # .lower()
         password = request.POST.get('password')
         try:
             user = User.objects.get(username=username)
@@ -29,7 +28,6 @@ def loginUser(request):
             return redirect('home')
         else:
             messages.error(request, 'Authetication Failed')
-
     context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
@@ -75,9 +73,20 @@ def home(request):
 def cat_room(request, pk):
     cat_room = CatRoom.objects.get(id=pk)
     meows = cat_room.meow_set.all().order_by('-created')
+    participants = cat_room.participants.all()
+    if request.method == "POST":
+        meows = Meow.objects.create(
+            cat=request.user,
+            catRoom=cat_room,
+            body=request.POST.get('body')
+        )
+        cat_room.participants.add(request.user)
+        return redirect('cat_room', pk=cat_room.id)
+
     context = {
         'cat_room': cat_room,
-        'meows': meows
+        'meows': meows,
+        'participants': participants
     }
     return render(request, 'base/cat_room.html', context)
 
@@ -90,7 +99,6 @@ def createCatRoom(request):
         if form.is_valid():
             form.save()
             return redirect('home')
-
     context = {'form': form}
     return render(request, 'base/cat_room_form.html', context)
 
@@ -106,7 +114,6 @@ def updateCatRoom(request, pk):
         if form.is_valid():
             form.save()
             return redirect('home')
-
     context = {'form': form}
     return render(request, 'base/cat_room_form.html', context)
 
@@ -117,9 +124,7 @@ def deleteCatRoom(request, pk):
     context = {'obj': cat_room}
     if request.user != cat_room.hostCat:
         return HttpResponse('You are not allowed here...')
-
     if request.method == 'POST':
         cat_room.delete()
         return redirect('home')
-
     return render(request, 'base/delete.html', context)
