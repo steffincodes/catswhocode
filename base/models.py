@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
-
 class Topic(models.Model):
     name = models.CharField(max_length=200)
 
@@ -16,6 +15,7 @@ class CatRoom(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(
         null=True, blank=True)  # can be blank in db & UI
+    participants = models.ManyToManyField(User, related_name='participants')
     updated = models.DateTimeField(auto_now=True)  # every saved change
     created = models.DateTimeField(auto_now_add=True)  # first saved change
 
